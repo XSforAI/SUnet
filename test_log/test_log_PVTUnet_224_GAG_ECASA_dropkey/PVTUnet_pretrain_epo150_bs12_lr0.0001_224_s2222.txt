@@ -1,0 +1,144 @@
+[14:42:15.051] Namespace(batch_size=12, checkpoint=None, deterministic=1, exp='PVTUnet_224_GAG_ECASA_dropkey', img_size=224, is_pretrain=True, list_dir='../data/ACDC/lists_ACDC', lr=0.0001, max_epochs=150, n_gpu=1, n_skip=3, num_classes=4, root_dir='../data/ACDC/', save_path='./model_pth/ACDC', seed=2222, test_save_dir='./predictions', vit_name='R50-ViT-B_16', vit_patches_size=16, volume_path='../data/ACDC/test', z_spacing=10)
+[14:42:15.051] PVTUnet_pretrain_epo150_bs12_lr0.0001_224_s2222
+[14:42:15.053] 40 test iterations per epoch
+[14:42:19.298] idx 0 case case_002_volume_ED.npz mean_dice 0.931557 mean_hd95 1.000000, mean_jacard 0.873789 mean_asd 0.194321
+[14:42:19.947] idx 1 case case_002_volume_ES.npz mean_dice 0.901179 mean_hd95 1.000000, mean_jacard 0.823020 mean_asd 0.242347
+[14:42:20.706] idx 2 case case_003_volume_ED.npz mean_dice 0.945587 mean_hd95 1.000000, mean_jacard 0.897923 mean_asd 0.161279
+[14:42:21.352] idx 3 case case_003_volume_ES.npz mean_dice 0.941840 mean_hd95 1.000000, mean_jacard 0.890965 mean_asd 0.179336
+[14:42:22.004] idx 4 case case_008_volume_ED.npz mean_dice 0.941151 mean_hd95 1.000000, mean_jacard 0.890850 mean_asd 0.175196
+[14:42:22.687] idx 5 case case_008_volume_ES.npz mean_dice 0.927556 mean_hd95 1.000000, mean_jacard 0.866128 mean_asd 0.215812
+[14:42:23.374] idx 6 case case_009_volume_ED.npz mean_dice 0.911668 mean_hd95 4.789772, mean_jacard 0.841357 mean_asd 0.568905
+[14:42:24.051] idx 7 case case_009_volume_ES.npz mean_dice 0.888336 mean_hd95 6.293981, mean_jacard 0.810817 mean_asd 0.787429
+[14:42:24.722] idx 8 case case_012_volume_ED.npz mean_dice 0.933709 mean_hd95 1.000000, mean_jacard 0.877656 mean_asd 0.162628
+[14:42:25.389] idx 9 case case_012_volume_ES.npz mean_dice 0.835443 mean_hd95 1.483163, mean_jacard 0.729004 mean_asd 0.352536
+[14:42:26.100] idx 10 case case_014_volume_ED.npz mean_dice 0.909743 mean_hd95 1.138071, mean_jacard 0.837908 mean_asd 0.188776
+[14:42:26.798] idx 11 case case_014_volume_ES.npz mean_dice 0.939234 mean_hd95 1.000000, mean_jacard 0.887166 mean_asd 0.107942
+[14:42:27.398] idx 12 case case_017_volume_ED.npz mean_dice 0.927547 mean_hd95 1.000000, mean_jacard 0.869991 mean_asd 0.178820
+[14:42:28.031] idx 13 case case_017_volume_ES.npz mean_dice 0.944494 mean_hd95 1.000000, mean_jacard 0.896873 mean_asd 0.159764
+[14:42:28.556] idx 14 case case_024_volume_ED.npz mean_dice 0.936524 mean_hd95 1.000000, mean_jacard 0.881070 mean_asd 0.169964
+[14:42:29.061] idx 15 case case_024_volume_ES.npz mean_dice 0.923353 mean_hd95 1.000000, mean_jacard 0.858361 mean_asd 0.191293
+[14:42:29.641] idx 16 case case_042_volume_ED.npz mean_dice 0.935971 mean_hd95 1.000000, mean_jacard 0.881944 mean_asd 0.177082
+[14:42:30.284] idx 17 case case_042_volume_ES.npz mean_dice 0.894343 mean_hd95 1.000000, mean_jacard 0.814146 mean_asd 0.285702
+[14:42:30.804] idx 18 case case_048_volume_ED.npz mean_dice 0.912134 mean_hd95 1.138071, mean_jacard 0.840398 mean_asd 0.862470
+[14:42:31.310] idx 19 case case_048_volume_ES.npz mean_dice 0.890287 mean_hd95 1.138071, mean_jacard 0.806693 mean_asd 0.255244
+[14:42:31.760] idx 20 case case_049_volume_ED.npz mean_dice 0.902608 mean_hd95 1.138071, mean_jacard 0.823357 mean_asd 0.236482
+[14:42:32.309] idx 21 case case_049_volume_ES.npz mean_dice 0.885106 mean_hd95 2.366340, mean_jacard 0.802426 mean_asd 0.634209
+[14:42:32.799] idx 22 case case_053_volume_ED.npz mean_dice 0.945607 mean_hd95 1.000000, mean_jacard 0.897897 mean_asd 0.141281
+[14:42:33.283] idx 23 case case_053_volume_ES.npz mean_dice 0.930511 mean_hd95 1.000000, mean_jacard 0.871127 mean_asd 0.180974
+[14:42:33.888] idx 24 case case_055_volume_ED.npz mean_dice 0.917090 mean_hd95 1.000000, mean_jacard 0.848073 mean_asd 0.269303
+[14:42:34.485] idx 25 case case_055_volume_ES.npz mean_dice 0.891735 mean_hd95 1.333333, mean_jacard 0.810646 mean_asd 0.315905
+[14:42:35.174] idx 26 case case_064_volume_ED.npz mean_dice 0.950933 mean_hd95 1.000000, mean_jacard 0.907254 mean_asd 0.155506
+[14:42:35.869] idx 27 case case_064_volume_ES.npz mean_dice 0.935991 mean_hd95 1.000000, mean_jacard 0.879873 mean_asd 0.197522
+[14:42:36.585] idx 28 case case_067_volume_ED.npz mean_dice 0.928302 mean_hd95 1.000000, mean_jacard 0.868851 mean_asd 0.225054
+[14:42:37.472] idx 29 case case_067_volume_ES.npz mean_dice 0.939377 mean_hd95 1.000000, mean_jacard 0.885986 mean_asd 0.204741
+[14:42:38.171] idx 30 case case_079_volume_ED.npz mean_dice 0.958896 mean_hd95 1.000000, mean_jacard 0.921429 mean_asd 0.105598
+[14:42:38.802] idx 31 case case_079_volume_ES.npz mean_dice 0.924498 mean_hd95 1.000000, mean_jacard 0.860195 mean_asd 0.200103
+[14:42:40.111] idx 32 case case_081_volume_ED.npz mean_dice 0.936596 mean_hd95 1.000000, mean_jacard 0.883198 mean_asd 0.251370
+[14:42:41.388] idx 33 case case_081_volume_ES.npz mean_dice 0.937075 mean_hd95 1.000000, mean_jacard 0.882039 mean_asd 0.210967
+[14:42:42.547] idx 34 case case_088_volume_ED.npz mean_dice 0.936795 mean_hd95 1.000000, mean_jacard 0.883566 mean_asd 0.172080
+[14:42:43.771] idx 35 case case_088_volume_ES.npz mean_dice 0.901436 mean_hd95 1.138071, mean_jacard 0.822341 mean_asd 0.257482
+[14:42:44.824] idx 36 case case_092_volume_ED.npz mean_dice 0.934697 mean_hd95 1.000000, mean_jacard 0.879215 mean_asd 0.291707
+[14:42:45.876] idx 37 case case_092_volume_ES.npz mean_dice 0.920211 mean_hd95 1.138071, mean_jacard 0.853016 mean_asd 0.361191
+[14:42:46.891] idx 38 case case_095_volume_ED.npz mean_dice 0.942742 mean_hd95 1.000000, mean_jacard 0.895262 mean_asd 0.179591
+[14:42:47.852] idx 39 case case_095_volume_ES.npz mean_dice 0.909961 mean_hd95 1.000000, mean_jacard 0.835283 mean_asd 0.366551
+[14:42:47.853] Mean class (1) mean_dice 0.906359 mean_hd95 1.886416, mean_jacard 0.834191 mean_asd 0.391789
+[14:42:47.853] Mean class (2) mean_dice 0.900586 mean_hd95 1.010355, mean_jacard 0.820037 mean_asd 0.233169
+[14:42:47.853] Mean class (3) mean_dice 0.960691 mean_hd95 1.010355, mean_jacard 0.924804 mean_asd 0.168127
+[14:42:47.853] Testing performance in best val model: mean_dice : 0.922546 mean_hd95 : 1.302375, mean_jacard : 0.859677 mean_asd : 0.264362
+[14:42:47.853] Testing Finished!
+[14:43:51.677] Namespace(batch_size=12, checkpoint=None, deterministic=1, exp='PVTUnet_224_GAG_ECASA_dropkey', img_size=224, is_pretrain=True, list_dir='../data/ACDC/lists_ACDC', lr=0.0001, max_epochs=150, n_gpu=1, n_skip=3, num_classes=4, root_dir='../data/ACDC/', save_path='./model_pth/ACDC', seed=2222, test_save_dir='./predictions', vit_name='R50-ViT-B_16', vit_patches_size=16, volume_path='../data/ACDC/test', z_spacing=10)
+[14:43:51.677] PVTUnet_pretrain_epo150_bs12_lr0.0001_224_s2222
+[14:43:51.678] 40 test iterations per epoch
+[14:43:54.635] idx 0 case case_002_volume_ED.npz mean_dice 0.931557 mean_hd95 1.000000, mean_jacard 0.873789 mean_asd 0.194321
+[14:43:55.297] idx 1 case case_002_volume_ES.npz mean_dice 0.901179 mean_hd95 1.000000, mean_jacard 0.823020 mean_asd 0.242347
+[14:43:55.973] idx 2 case case_003_volume_ED.npz mean_dice 0.945587 mean_hd95 1.000000, mean_jacard 0.897923 mean_asd 0.161279
+[14:43:56.632] idx 3 case case_003_volume_ES.npz mean_dice 0.941840 mean_hd95 1.000000, mean_jacard 0.890965 mean_asd 0.179336
+[14:43:57.320] idx 4 case case_008_volume_ED.npz mean_dice 0.941151 mean_hd95 1.000000, mean_jacard 0.890850 mean_asd 0.175196
+[14:43:58.004] idx 5 case case_008_volume_ES.npz mean_dice 0.927556 mean_hd95 1.000000, mean_jacard 0.866128 mean_asd 0.215812
+[14:43:58.713] idx 6 case case_009_volume_ED.npz mean_dice 0.911668 mean_hd95 4.789772, mean_jacard 0.841357 mean_asd 0.568905
+[14:43:59.403] idx 7 case case_009_volume_ES.npz mean_dice 0.888336 mean_hd95 6.293981, mean_jacard 0.810817 mean_asd 0.787429
+[14:44:00.117] idx 8 case case_012_volume_ED.npz mean_dice 0.933709 mean_hd95 1.000000, mean_jacard 0.877656 mean_asd 0.162628
+[14:44:00.797] idx 9 case case_012_volume_ES.npz mean_dice 0.835443 mean_hd95 1.483163, mean_jacard 0.729004 mean_asd 0.352536
+[14:44:01.492] idx 10 case case_014_volume_ED.npz mean_dice 0.909743 mean_hd95 1.138071, mean_jacard 0.837908 mean_asd 0.188776
+[14:44:02.191] idx 11 case case_014_volume_ES.npz mean_dice 0.939234 mean_hd95 1.000000, mean_jacard 0.887166 mean_asd 0.107942
+[14:44:02.788] idx 12 case case_017_volume_ED.npz mean_dice 0.927547 mean_hd95 1.000000, mean_jacard 0.869991 mean_asd 0.178820
+[14:44:03.395] idx 13 case case_017_volume_ES.npz mean_dice 0.944494 mean_hd95 1.000000, mean_jacard 0.896873 mean_asd 0.159764
+[14:44:03.903] idx 14 case case_024_volume_ED.npz mean_dice 0.936524 mean_hd95 1.000000, mean_jacard 0.881070 mean_asd 0.169964
+[14:44:04.412] idx 15 case case_024_volume_ES.npz mean_dice 0.923353 mean_hd95 1.000000, mean_jacard 0.858361 mean_asd 0.191293
+[14:44:04.976] idx 16 case case_042_volume_ED.npz mean_dice 0.935971 mean_hd95 1.000000, mean_jacard 0.881944 mean_asd 0.177082
+[14:44:05.528] idx 17 case case_042_volume_ES.npz mean_dice 0.894343 mean_hd95 1.000000, mean_jacard 0.814146 mean_asd 0.285702
+[14:44:06.047] idx 18 case case_048_volume_ED.npz mean_dice 0.912134 mean_hd95 1.138071, mean_jacard 0.840398 mean_asd 0.862470
+[14:44:06.563] idx 19 case case_048_volume_ES.npz mean_dice 0.890287 mean_hd95 1.138071, mean_jacard 0.806693 mean_asd 0.255244
+[14:44:07.105] idx 20 case case_049_volume_ED.npz mean_dice 0.902608 mean_hd95 1.138071, mean_jacard 0.823357 mean_asd 0.236482
+[14:44:07.553] idx 21 case case_049_volume_ES.npz mean_dice 0.885106 mean_hd95 2.366340, mean_jacard 0.802426 mean_asd 0.634209
+[14:44:08.010] idx 22 case case_053_volume_ED.npz mean_dice 0.945607 mean_hd95 1.000000, mean_jacard 0.897897 mean_asd 0.141281
+[14:44:08.470] idx 23 case case_053_volume_ES.npz mean_dice 0.930511 mean_hd95 1.000000, mean_jacard 0.871127 mean_asd 0.180974
+[14:44:09.070] idx 24 case case_055_volume_ED.npz mean_dice 0.917090 mean_hd95 1.000000, mean_jacard 0.848073 mean_asd 0.269303
+[14:44:09.674] idx 25 case case_055_volume_ES.npz mean_dice 0.891735 mean_hd95 1.333333, mean_jacard 0.810646 mean_asd 0.315905
+[14:44:10.370] idx 26 case case_064_volume_ED.npz mean_dice 0.950933 mean_hd95 1.000000, mean_jacard 0.907254 mean_asd 0.155506
+[14:44:11.140] idx 27 case case_064_volume_ES.npz mean_dice 0.935991 mean_hd95 1.000000, mean_jacard 0.879873 mean_asd 0.197522
+[14:44:11.784] idx 28 case case_067_volume_ED.npz mean_dice 0.928302 mean_hd95 1.000000, mean_jacard 0.868851 mean_asd 0.225054
+[14:44:12.465] idx 29 case case_067_volume_ES.npz mean_dice 0.939377 mean_hd95 1.000000, mean_jacard 0.885986 mean_asd 0.204741
+[14:44:13.072] idx 30 case case_079_volume_ED.npz mean_dice 0.958896 mean_hd95 1.000000, mean_jacard 0.921429 mean_asd 0.105598
+[14:44:13.673] idx 31 case case_079_volume_ES.npz mean_dice 0.924498 mean_hd95 1.000000, mean_jacard 0.860195 mean_asd 0.200103
+[14:44:14.891] idx 32 case case_081_volume_ED.npz mean_dice 0.936596 mean_hd95 1.000000, mean_jacard 0.883198 mean_asd 0.251370
+[14:44:16.088] idx 33 case case_081_volume_ES.npz mean_dice 0.937075 mean_hd95 1.000000, mean_jacard 0.882039 mean_asd 0.210967
+[14:44:17.251] idx 34 case case_088_volume_ED.npz mean_dice 0.936795 mean_hd95 1.000000, mean_jacard 0.883566 mean_asd 0.172080
+[14:44:18.379] idx 35 case case_088_volume_ES.npz mean_dice 0.901436 mean_hd95 1.138071, mean_jacard 0.822341 mean_asd 0.257482
+[14:44:19.452] idx 36 case case_092_volume_ED.npz mean_dice 0.934697 mean_hd95 1.000000, mean_jacard 0.879215 mean_asd 0.291707
+[14:44:20.514] idx 37 case case_092_volume_ES.npz mean_dice 0.920211 mean_hd95 1.138071, mean_jacard 0.853016 mean_asd 0.361191
+[14:44:21.518] idx 38 case case_095_volume_ED.npz mean_dice 0.942742 mean_hd95 1.000000, mean_jacard 0.895262 mean_asd 0.179591
+[14:44:22.505] idx 39 case case_095_volume_ES.npz mean_dice 0.909961 mean_hd95 1.000000, mean_jacard 0.835283 mean_asd 0.366551
+[14:44:22.506] Mean class (1) mean_dice 0.906359 mean_hd95 1.886416, mean_jacard 0.834191 mean_asd 0.391789
+[14:44:22.506] Mean class (2) mean_dice 0.900586 mean_hd95 1.010355, mean_jacard 0.820037 mean_asd 0.233169
+[14:44:22.506] Mean class (3) mean_dice 0.960691 mean_hd95 1.010355, mean_jacard 0.924804 mean_asd 0.168127
+[14:44:22.506] Testing performance in best val model: mean_dice : 0.922546 mean_hd95 : 1.302375, mean_jacard : 0.859677 mean_asd : 0.264362
+[14:44:22.506] Testing Finished!
+[14:47:27.062] Namespace(batch_size=12, checkpoint=None, deterministic=1, exp='PVTUnet_224_GAG_ECASA_dropkey', img_size=224, is_pretrain=True, list_dir='../data/ACDC/lists_ACDC', lr=0.0001, max_epochs=150, n_gpu=1, n_skip=3, num_classes=4, root_dir='../data/ACDC/', save_path='./model_pth/ACDC', seed=2222, test_save_dir='./predictions', vit_name='R50-ViT-B_16', vit_patches_size=16, volume_path='../data/ACDC/test', z_spacing=10)
+[14:47:27.062] PVTUnet_pretrain_epo150_bs12_lr0.0001_224_s2222
+[14:47:27.063] 40 test iterations per epoch
+[14:47:29.921] idx 0 case case_002_volume_ED.npz mean_dice 0.931557 mean_hd95 1.000000, mean_jacard 0.873789 mean_asd 0.194321
+[14:47:30.562] idx 1 case case_002_volume_ES.npz mean_dice 0.901179 mean_hd95 1.000000, mean_jacard 0.823020 mean_asd 0.242347
+[14:47:31.173] idx 2 case case_003_volume_ED.npz mean_dice 0.945587 mean_hd95 1.000000, mean_jacard 0.897923 mean_asd 0.161279
+[14:47:31.814] idx 3 case case_003_volume_ES.npz mean_dice 0.941840 mean_hd95 1.000000, mean_jacard 0.890965 mean_asd 0.179336
+[14:47:32.472] idx 4 case case_008_volume_ED.npz mean_dice 0.941151 mean_hd95 1.000000, mean_jacard 0.890850 mean_asd 0.175196
+[14:47:33.109] idx 5 case case_008_volume_ES.npz mean_dice 0.927556 mean_hd95 1.000000, mean_jacard 0.866128 mean_asd 0.215812
+[14:47:33.774] idx 6 case case_009_volume_ED.npz mean_dice 0.911668 mean_hd95 4.789772, mean_jacard 0.841357 mean_asd 0.568905
+[14:47:34.438] idx 7 case case_009_volume_ES.npz mean_dice 0.888336 mean_hd95 6.293981, mean_jacard 0.810817 mean_asd 0.787429
+[14:47:35.117] idx 8 case case_012_volume_ED.npz mean_dice 0.933709 mean_hd95 1.000000, mean_jacard 0.877656 mean_asd 0.162628
+[14:47:35.759] idx 9 case case_012_volume_ES.npz mean_dice 0.835443 mean_hd95 1.483163, mean_jacard 0.729004 mean_asd 0.352536
+[14:47:36.448] idx 10 case case_014_volume_ED.npz mean_dice 0.909743 mean_hd95 1.138071, mean_jacard 0.837908 mean_asd 0.188776
+[14:47:37.132] idx 11 case case_014_volume_ES.npz mean_dice 0.939234 mean_hd95 1.000000, mean_jacard 0.887166 mean_asd 0.107942
+[14:47:37.738] idx 12 case case_017_volume_ED.npz mean_dice 0.927547 mean_hd95 1.000000, mean_jacard 0.869991 mean_asd 0.178820
+[14:47:38.344] idx 13 case case_017_volume_ES.npz mean_dice 0.944494 mean_hd95 1.000000, mean_jacard 0.896873 mean_asd 0.159764
+[14:47:38.850] idx 14 case case_024_volume_ED.npz mean_dice 0.936524 mean_hd95 1.000000, mean_jacard 0.881070 mean_asd 0.169964
+[14:47:39.356] idx 15 case case_024_volume_ES.npz mean_dice 0.923353 mean_hd95 1.000000, mean_jacard 0.858361 mean_asd 0.191293
+[14:47:39.921] idx 16 case case_042_volume_ED.npz mean_dice 0.935971 mean_hd95 1.000000, mean_jacard 0.881944 mean_asd 0.177082
+[14:47:40.479] idx 17 case case_042_volume_ES.npz mean_dice 0.894343 mean_hd95 1.000000, mean_jacard 0.814146 mean_asd 0.285702
+[14:47:40.983] idx 18 case case_048_volume_ED.npz mean_dice 0.912134 mean_hd95 1.138071, mean_jacard 0.840398 mean_asd 0.862470
+[14:47:41.501] idx 19 case case_048_volume_ES.npz mean_dice 0.890287 mean_hd95 1.138071, mean_jacard 0.806693 mean_asd 0.255244
+[14:47:41.948] idx 20 case case_049_volume_ED.npz mean_dice 0.902608 mean_hd95 1.138071, mean_jacard 0.823357 mean_asd 0.236482
+[14:47:42.403] idx 21 case case_049_volume_ES.npz mean_dice 0.885106 mean_hd95 2.366340, mean_jacard 0.802426 mean_asd 0.634209
+[14:47:42.858] idx 22 case case_053_volume_ED.npz mean_dice 0.945607 mean_hd95 1.000000, mean_jacard 0.897897 mean_asd 0.141281
+[14:47:43.437] idx 23 case case_053_volume_ES.npz mean_dice 0.930511 mean_hd95 1.000000, mean_jacard 0.871127 mean_asd 0.180974
+[14:47:44.018] idx 24 case case_055_volume_ED.npz mean_dice 0.917090 mean_hd95 1.000000, mean_jacard 0.848073 mean_asd 0.269303
+[14:47:44.599] idx 25 case case_055_volume_ES.npz mean_dice 0.891735 mean_hd95 1.333333, mean_jacard 0.810646 mean_asd 0.315905
+[14:47:45.267] idx 26 case case_064_volume_ED.npz mean_dice 0.950933 mean_hd95 1.000000, mean_jacard 0.907254 mean_asd 0.155506
+[14:47:45.944] idx 27 case case_064_volume_ES.npz mean_dice 0.935991 mean_hd95 1.000000, mean_jacard 0.879873 mean_asd 0.197522
+[14:47:46.609] idx 28 case case_067_volume_ED.npz mean_dice 0.928302 mean_hd95 1.000000, mean_jacard 0.868851 mean_asd 0.225054
+[14:47:47.273] idx 29 case case_067_volume_ES.npz mean_dice 0.939377 mean_hd95 1.000000, mean_jacard 0.885986 mean_asd 0.204741
+[14:47:47.876] idx 30 case case_079_volume_ED.npz mean_dice 0.958896 mean_hd95 1.000000, mean_jacard 0.921429 mean_asd 0.105598
+[14:47:48.467] idx 31 case case_079_volume_ES.npz mean_dice 0.924498 mean_hd95 1.000000, mean_jacard 0.860195 mean_asd 0.200103
+[14:47:49.653] idx 32 case case_081_volume_ED.npz mean_dice 0.936596 mean_hd95 1.000000, mean_jacard 0.883198 mean_asd 0.251370
+[14:47:50.859] idx 33 case case_081_volume_ES.npz mean_dice 0.937075 mean_hd95 1.000000, mean_jacard 0.882039 mean_asd 0.210967
+[14:47:51.988] idx 34 case case_088_volume_ED.npz mean_dice 0.936795 mean_hd95 1.000000, mean_jacard 0.883566 mean_asd 0.172080
+[14:47:53.114] idx 35 case case_088_volume_ES.npz mean_dice 0.901436 mean_hd95 1.138071, mean_jacard 0.822341 mean_asd 0.257482
+[14:47:54.176] idx 36 case case_092_volume_ED.npz mean_dice 0.934697 mean_hd95 1.000000, mean_jacard 0.879215 mean_asd 0.291707
+[14:47:55.218] idx 37 case case_092_volume_ES.npz mean_dice 0.920211 mean_hd95 1.138071, mean_jacard 0.853016 mean_asd 0.361191
+[14:47:56.196] idx 38 case case_095_volume_ED.npz mean_dice 0.942742 mean_hd95 1.000000, mean_jacard 0.895262 mean_asd 0.179591
+[14:47:57.156] idx 39 case case_095_volume_ES.npz mean_dice 0.909961 mean_hd95 1.000000, mean_jacard 0.835283 mean_asd 0.366551
+[14:47:57.157] Mean class (1) mean_dice 0.906359 mean_hd95 1.886416, mean_jacard 0.834191 mean_asd 0.391789
+[14:47:57.157] Mean class (2) mean_dice 0.900586 mean_hd95 1.010355, mean_jacard 0.820037 mean_asd 0.233169
+[14:47:57.158] Mean class (3) mean_dice 0.960691 mean_hd95 1.010355, mean_jacard 0.924804 mean_asd 0.168127
+[14:47:57.158] Testing performance in best val model: mean_dice : 0.922546 mean_hd95 : 1.302375, mean_jacard : 0.859677 mean_asd : 0.264362
+[14:47:57.158] Testing Finished!
