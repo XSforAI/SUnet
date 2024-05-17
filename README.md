@@ -1,4 +1,4 @@
-# SUnet: A multi-organ segmentation network based on multiple attention
+# [SUnet: A multi-organ segmentation network based on multiple attention](https://www.sciencedirect.com/science/article/pii/S0010482523010612)
 
 The official implementation of "SUnet: A multi-organ segmentation network based on multiple attention"
 ## Architectures
