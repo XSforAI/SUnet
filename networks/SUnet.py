@@ -220,7 +220,7 @@ class SUnet(nn.Module):
 if __name__ == "__main__":
     x = torch.rand((8, 1, 224, 224))
 
-    net = PVTUnet()
+    net = SUnet()
     print(net)
     net.load_from('../pretrain_pth/pvt_v2_b1.pth')
 
