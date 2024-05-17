@@ -1,6 +1,22 @@
 # SUnet: A multi-organ segmentation network based on multiple attention
 
 The official implementation of "SUnet: A multi-organ segmentation network based on multiple attention"
+## Architectures
+<p align="center">
+    <img src="paper_image/Figure_1.jpg" width=80% height=50% class="center">
+</p>
+
+## Comparison with other models
+<p align="center">
+    <img src="paper_image/Figure_5.jpg" width=80% height=50% class="center">
+</p>
+
+## Qualitative Results on Synapse Multi-organ dataset
+
+<p align="center">
+<img src="paper_image/Figure_7.jpg" width=80% height=50% 
+class="center">
+</p>
 
 # install:
 
