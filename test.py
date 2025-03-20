@@ -13,7 +13,7 @@ from datasets.dataset_synapse import Synapse_dataset
 from utils import test_single_volume
 from networks_PCon.MISSFormer import MISSFormer
 from trainer import trainer_synapse
-from networks_PCon.PVTUnet import PVTUnet
+from networks.SUnet import SUnet
 from datasets.dataset_ACDC import ACDCdataset
 
 
