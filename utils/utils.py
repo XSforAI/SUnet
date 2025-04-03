@@ -1,11 +1,15 @@
+
 import torch
 import torch.nn as nn
 import numpy as np
 from medpy import metric
 from scipy.ndimage import zoom
 import seaborn as sns
+
 import SimpleITK as sitk
 import pandas as pd
+
+
 from thop import profile
 from thop import clever_format
 
@@ -149,7 +153,7 @@ def calculate_dice_percase(pred, gt):
         return 0
 
 
-def test_single_volume(image, label, net, classes, patch_size=[256, 256], test_save_path=None, case=None, z_spacing=1):
+def test_single_volume(image, label, net, classes, patch_size=[256, 256], test_save_path=None, case=None, z_spacing=1, deep_supervision=False):
     image, label = image.squeeze(0).cpu().detach().numpy(), label.squeeze(0).cpu().detach().numpy()
     if len(image.shape) == 3:
         prediction = np.zeros_like(label)
@@ -161,8 +165,12 @@ def test_single_volume(image, label, net, classes, patch_size=[256, 256], test_s
             input = torch.from_numpy(slice).unsqueeze(0).unsqueeze(0).float().cuda()
             net.eval()
             with torch.no_grad():
-                p4 = net(input)
-                outputs = p4
+                if deep_supervision:
+                    p1, p2, p3, p4 = net(input)
+                    outputs = p1 + p2 + p3 + p4
+                else:
+                    p4 = net(input)
+                    outputs = p4
                 out = torch.argmax(torch.softmax(outputs, dim=1), dim=1).squeeze(0)
                 out = out.cpu().detach().numpy()
                 if x != patch_size[0] or y != patch_size[1]:
@@ -175,8 +183,12 @@ def test_single_volume(image, label, net, classes, patch_size=[256, 256], test_s
             0).unsqueeze(0).float().cuda()
         net.eval()
         with torch.no_grad():
-            p4 = net(input)
-            outputs = p4
+            if deep_supervision:
+                p1, p2, p3, p4 = net(input)
+                outputs = p1 + p2 + p3 + p4
+            else:
+                p4 = net(input)
+                outputs = p4
             out = torch.argmax(torch.softmax(outputs, dim=1), dim=1).squeeze(0)
             prediction = out.cpu().detach().numpy()
     metric_list = []
@@ -207,6 +219,8 @@ def val_single_volume(image, label, net, classes, patch_size=[256, 256], test_sa
             input = torch.from_numpy(slice).unsqueeze(0).unsqueeze(0).float().cuda()
             net.eval()
             with torch.no_grad():
+                # p1, p2, p3, p4 = net(input)
+                # outputs = p1 + p2 + p3 + p4
                 p4 = net(input)
                 outputs = p4
                 out = torch.argmax(torch.softmax(outputs, dim=1), dim=1).squeeze(0)
@@ -221,6 +235,8 @@ def val_single_volume(image, label, net, classes, patch_size=[256, 256], test_sa
             0).unsqueeze(0).float().cuda()
         net.eval()
         with torch.no_grad():
+            # p1, p2, p3, p4 = net(input)
+            # outputs = p1 + p2 + p3 + p4
             p4 = net(input)
             outputs = p4
             out = torch.argmax(torch.softmax(outputs, dim=1), dim=1).squeeze(0)

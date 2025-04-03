@@ -80,8 +80,8 @@ class Attention(nn.Module):
         self.num_heads = num_heads
         head_dim = dim // num_heads
         self.scale = qk_scale or head_dim ** -0.5
-        # self.use_dropkey=use_dropkey
-        # self.dropkey_rate = dropkey_rate
+        self.use_dropkey=use_dropkey
+        self.dropkey_rate = dropkey_rate
 
         self.q = nn.Linear(dim, dim, bias=qkv_bias)
         self.kv = nn.Linear(dim, dim * 2, bias=qkv_bias)
@@ -142,6 +142,9 @@ class Attention(nn.Module):
         k, v = kv[0], kv[1]
 
         attn = (q @ k.transpose(-2, -1)) * self.scale
+        if self.use_dropkey == True:
+            m_r = torch.ones_like(attn) * self.dropkey_rate
+            attn = attn + torch.bernoulli(m_r) * -1e12
 
 
         attn = attn.softmax(dim=-1)
@@ -366,9 +369,10 @@ class EFF(nn.Module):
         self.is_bottom = is_bottom
         if not is_bottom:
             self.EAG = Efficient_Attention_Gate(in_dim, in_dim, out_dim)
+            self.ECA = EfficientChannelAttention(in_dim*2)
         else:
             self.EAG = nn.Identity()
-        self.ECA = EfficientChannelAttention(in_dim*2)
+            self.ECA = EfficientChannelAttention(in_dim)
         self.SA = SpatialAttention()
 
     def forward(self, x, skip):

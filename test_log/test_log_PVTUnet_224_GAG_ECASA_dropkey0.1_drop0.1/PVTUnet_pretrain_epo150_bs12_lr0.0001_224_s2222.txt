@@ -1,3 +1,0 @@
-[21:51:19.452] Namespace(batch_size=12, checkpoint=None, deterministic=1, exp='PVTUnet_224_GAG_ECASA_dropkey0.1_drop0.1', img_size=224, is_pretrain=True, list_dir='../data/ACDC/lists_ACDC', lr=0.0001, max_epochs=150, n_gpu=1, n_skip=3, num_classes=4, root_dir='../data/ACDC/', save_path='./model_pth/ACDC', seed=2222, test_save_dir='./predictions', vit_name='R50-ViT-B_16', vit_patches_size=16, volume_path='../data/ACDC/test', z_spacing=10)
-[21:51:19.452] PVTUnet_pretrain_epo150_bs12_lr0.0001_224_s2222
-[21:51:19.455] 40 test iterations per epoch

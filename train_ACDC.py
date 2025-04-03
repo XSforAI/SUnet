@@ -4,37 +4,38 @@ import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from ptflops import get_model_complexity_info
 from torch.nn.modules.loss import CrossEntropyLoss
 import torchvision
 from torchvision import transforms
 from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 import random
-from networks.SUnet import SUnet
 
 import numpy as np
 from tqdm import tqdm
-from medpy.metric import dc, hd95
+from medpy.metric import dc,hd95
 
-
-from utils.utils_multi import DiceLoss, calculate_dice_percase, val_single_volume
+from networks.SUnet import SUnet
+from utils.utils import DiceLoss, calculate_dice_percase, val_single_volume
 from utils.dataset_ACDC import ACDCdataset, RandomGenerator
 from test_ACDC import inference
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--batch_size", default=12, help="batch size")
-parser.add_argument("--lr", default=0.0001, help="learning rate")   #AdamW
-# parser.add_argument("--lr", default=0.01, help="learning rate")
+parser.add_argument("--lr", default=0.0001, help="learning rate")
 parser.add_argument("--max_epochs", default=150)
 parser.add_argument("--img_size", default=224)
 parser.add_argument("--save_path", default="./model_pth/ACDC")
+parser.add_argument('--is_pretrain', type=bool, default=True,
+                    help='whether to load pretrained model')
+parser.add_argument('--pretrained_path', type=str, default='./pretrain_pth/pvt_v2_b1.pth')
+parser.add_argument('--deep_supervision', type=bool, default=False)
 parser.add_argument("--n_gpu", default=1)
 parser.add_argument("--checkpoint", default=None)
-parser.add_argument("--list_dir", default="../data/ACDC/lists_ACDC")
-parser.add_argument("--root_dir", default="../data/ACDC/")
-parser.add_argument("--volume_path", default="../data/ACDC/test")
+parser.add_argument("--list_dir", default="../Datasets/ACDC/lists_ACDC")
+parser.add_argument("--root_dir", default="../Datasets/ACDC/")
+parser.add_argument("--volume_path", default="../Datasets/ACDC/test")
 parser.add_argument("--z_spacing", default=10)
 parser.add_argument("--num_classes", default=4)
 parser.add_argument('--test_save_dir', default='./predictions', help='saving prediction as nii!')
@@ -42,7 +43,12 @@ parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--seed', type=int,
                     default=2222, help='random seed')
-
+parser.add_argument('--n_skip', type=int,
+                    default=3, help='using number of skip-connect, default is num')
+parser.add_argument('--vit_name', type=str,
+                    default='R50-ViT-B_16', help='select one vit model')
+parser.add_argument('--vit_patches_size', type=int,
+                    default=16, help='vit_patches_size, default is 16')                    
 args = parser.parse_args()
 
 if not args.deterministic:
@@ -57,11 +63,13 @@ np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
-suffix = '_GAG_CASA_test'
-args.is_pretrain = True
-args.exp = 'PVTUnet_' + str(args.img_size) + suffix
-snapshot_path = "{}/{}/{}".format(args.save_path, args.exp, 'PVTUnet')
+
+args.exp = 'SUNet_' + str(args.img_size)
+snapshot_path = "{}/{}/{}".format(args.save_path, args.exp, 'SUNet')
 snapshot_path = snapshot_path + '_pretrain' if args.is_pretrain else snapshot_path
+# snapshot_path += '_' + args.vit_name
+# snapshot_path = snapshot_path + '_skip' + str(args.n_skip)
+# snapshot_path = snapshot_path + '_vitpatch' + str(args.vit_patches_size) if args.vit_patches_size!=16 else snapshot_path
 snapshot_path = snapshot_path + '_epo' +str(args.max_epochs) if args.max_epochs != 30 else snapshot_path
 snapshot_path = snapshot_path+'_bs'+str(args.batch_size)
 snapshot_path = snapshot_path + '_lr' + str(args.lr) if args.lr != 0.01 else snapshot_path
@@ -75,21 +83,13 @@ args.test_save_dir = os.path.join(snapshot_path, args.test_save_dir)
 test_save_path = os.path.join(args.test_save_dir, args.exp)
 if not os.path.exists(test_save_path):
     os.makedirs(test_save_path, exist_ok=True)
+        
 
-
-net = SUnet(num_classes=args.num_classes).cuda(0) # model initialization for TransCASCADE
-print(net)
-macs, params = get_model_complexity_info(net, (3, args.img_size, args.img_size), as_strings=True,
-                                         print_per_layer_stat=False, verbose=True)
-print('{:<30}  {:<8}'.format('Computational complexity: ', macs))
-print('{:<30}  {:<8}'.format('Number of parameters: ', params))
-
-net.load_from('./pretrain_pth/pvt_v2_b1.pth')
 #net = PVT_CASCADE(n_class=config_vit.n_classes).cuda() # model initialization for PVT-CASCADE. comment above two lines if use PVT-CASCADE
+net = SUnet(num_classes=args.num_classes).cuda()
 
-
-if args.checkpoint:
-    net.load_state_dict(torch.load(args.checkpoint))
+if args.is_pretrain:
+    net.load_from(args.pretrained_path)
 
 train_dataset = ACDCdataset(args.root_dir, args.list_dir, split="train", transform=
                                    transforms.Compose(
@@ -108,7 +108,7 @@ net = net.cuda()
 net.train()
 ce_loss = CrossEntropyLoss()
 dice_loss = DiceLoss(args.num_classes)
-
+save_interval = args.n_skip
 
 iterator = tqdm(range(0, args.max_epochs), ncols=70)
 iter_num = 0
@@ -124,7 +124,7 @@ logging.basicConfig(filename=snapshot_path + "/log.txt", level=logging.INFO,
 max_iterations = args.max_epochs * len(Train_loader)
 base_lr = args.lr
 optimizer = optim.AdamW(net.parameters(), lr=base_lr, weight_decay=0.0001)
-# optimizer = optim.SGD(net.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
+#optimizer = optim.SGD(net.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
 
 def val():
     logging.info("Validation ===>")
@@ -135,8 +135,12 @@ def val():
         val_image_batch, val_label_batch = val_sampled_batch["image"], val_sampled_batch["label"]
         val_image_batch, val_label_batch = val_image_batch.type(torch.FloatTensor), val_label_batch.type(torch.FloatTensor)
         val_image_batch, val_label_batch = val_image_batch.cuda().unsqueeze(1), val_label_batch.cuda().unsqueeze(1)
-        p4 = net(val_image_batch)
-        val_outputs = p4
+        if args.deep_supervision:
+            p1, p2, p3, p4 = net(val_image_batch)
+            val_outputs = p1 + p2 + p3 + p4
+        else:
+            p4 = net(val_image_batch)
+            val_outputs = p4
         val_outputs = torch.argmax(torch.softmax(val_outputs, dim=1), dim=1).squeeze(0)
         
         dc_sum+=dc(val_outputs.cpu().data.numpy(),val_label_batch[:].cpu().data.numpy())
@@ -154,20 +158,32 @@ for epoch in iterator:
         image_batch, label_batch = sampled_batch["image"], sampled_batch["label"]
         image_batch, label_batch = image_batch.type(torch.FloatTensor), label_batch.type(torch.FloatTensor)
         image_batch, label_batch = image_batch.cuda(), label_batch.cuda()
+        if args.deep_supervision:
+            p1, p2, p3, p4 = net(image_batch) # forward
+            outputs = p1 + p2 + p3 + p4 # additive output aggregation
+            loss_ce1 = ce_loss(p1, label_batch[:].long())
+            loss_ce2 = ce_loss(p2, label_batch[:].long())
+            loss_ce3 = ce_loss(p3, label_batch[:].long())
+            loss_ce4 = ce_loss(p4, label_batch[:].long())
 
-        p4 = net(image_batch) # forward
-            
-        outputs = p4 # additive output aggregation
-            
+            loss_dice1 = dice_loss(p1, label_batch, softmax=True)
+            loss_dice2 = dice_loss(p2, label_batch, softmax=True)
+            loss_dice3 = dice_loss(p3, label_batch, softmax=True)
+            loss_dice4 = dice_loss(p4, label_batch, softmax=True)
 
-        loss_ce = ce_loss(p4, label_batch[:].long())
-
-        loss_dice = dice_loss(p4, label_batch, softmax=True)
-            
-
-        loss= 0.4 * loss_ce + 0.6 * loss_dice
-
-
+            loss_p1 = 0.3 * loss_ce1 + 0.7 * loss_dice1
+            loss_p2 = 0.3 * loss_ce2 + 0.7 * loss_dice2
+            loss_p3 = 0.3 * loss_ce3 + 0.7 * loss_dice3
+            loss_p4 = 0.3 * loss_ce4 + 0.7 * loss_dice4
+            alpha, beta, gamma, zeta = 1., 1., 1., 1.
+            loss = alpha * loss_p1 + beta * loss_p2 + gamma * loss_p3 + zeta * loss_p4 # current setting is for additive aggregation.
+        else:
+            p4 = net(image_batch) # forward
+            outputs = p4
+            loss_dice4 = dice_loss(p4, label_batch, softmax=True)
+            loss_ce4 = ce_loss(p4, label_batch[:].long())
+            loss_p4 = 0.3 * loss_ce4 + 0.7 * loss_dice4
+            loss = loss_p4
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -179,10 +195,10 @@ for epoch in iterator:
 
         iter_num = iter_num + 1
         if iter_num%20 == 0:
-            logging.info('iteration %d : loss : %f loss_ce:%f lr_: %f' % (iter_num,  loss.item(), loss_ce.item(), lr_))
+            logging.info('iteration %d : loss : %f lr_: %f' % (iter_num, loss.item(), lr_))
         train_loss += loss.item()
     Loss.append(train_loss/len(train_dataset))
-    logging.info('iteration %d : loss : %f loss_ce:%f lr_: %f' % (iter_num, loss.item(),loss_ce.item(), lr_))
+    logging.info('iteration %d : loss : %f lr_: %f' % (iter_num, loss.item(), lr_))
 
     
     avg_dcs = val()

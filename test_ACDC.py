@@ -23,7 +23,7 @@ def inference(args, model, testloader, test_save_path=None):
             h, w = sampled_batch["image"].size()[2:]
             image, label, case_name = sampled_batch["image"], sampled_batch["label"], sampled_batch['case_name'][0]
             metric_i = test_single_volume(image, label, model, classes=args.num_classes, patch_size=[args.img_size, args.img_size],
-                                          test_save_path=test_save_path, case=case_name, z_spacing=args.z_spacing)
+                                          test_save_path=test_save_path, case=case_name, z_spacing=args.z_spacing, deep_supervision=args.deep_supervision)
             metric_list += np.array(metric_i)
             logging.info('idx %d case %s mean_dice %f mean_hd95 %f, mean_jacard %f mean_asd %f' % (i_batch, case_name, np.mean(metric_i, axis=0)[0], np.mean(metric_i, axis=0)[1], np.mean(metric_i, axis=0)[2], np.mean(metric_i, axis=0)[3]))
         metric_list = metric_list / len(testloader)
@@ -39,17 +39,22 @@ def inference(args, model, testloader, test_save_path=None):
         
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch_size", default=12, help="batch size")
     parser.add_argument("--lr", default=0.0001, help="learning rate")
     parser.add_argument("--max_epochs", default=150)
     parser.add_argument("--img_size", default=224)
     parser.add_argument("--save_path", default="./model_pth/ACDC")
+    parser.add_argument('--is_pretrain', type=bool, default=True,
+                        help='whether to load pretrained model')
+    parser.add_argument('--pretrained_path', type=str, default='./pretrain_pth/pvt_v2_b1.pth')
+    parser.add_argument('--deep_supervision', type=bool, default=False)
     parser.add_argument("--n_gpu", default=1)
     parser.add_argument("--checkpoint", default=None)
-    parser.add_argument("--list_dir", default="../data/ACDC/lists_ACDC")
-    parser.add_argument("--root_dir", default="../data/ACDC/")
-    parser.add_argument("--volume_path", default="../data/ACDC/test")
+    parser.add_argument("--list_dir", default="../Datasets/ACDC/lists_ACDC")
+    parser.add_argument("--root_dir", default="../Datasets/ACDC/")
+    parser.add_argument("--volume_path", default="../Datasets/ACDC/test")
     parser.add_argument("--z_spacing", default=10)
     parser.add_argument("--num_classes", default=4)
     parser.add_argument('--test_save_dir', default='./predictions', help='saving prediction as nii!')
@@ -76,20 +81,18 @@ if __name__ == "__main__":
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
-    suffix = '_GAG_CASA_1'
-    args.is_pretrain = True
-    args.exp = 'PVTUnet_' + str(args.img_size) + suffix
-    snapshot_path = "{}/{}/{}".format(args.save_path, args.exp, 'PVTUnet')
-    snapshot_path = snapshot_path + '_pretrain' if args.is_pretrain else snapshot_path
-    snapshot_path = snapshot_path + '_epo' + str(args.max_epochs) if args.max_epochs != 30 else snapshot_path
-    snapshot_path = snapshot_path + '_bs' + str(args.batch_size)
-    snapshot_path = snapshot_path + '_lr' + str(args.lr) if args.lr != 0.01 else snapshot_path
-    snapshot_path = snapshot_path + '_' + str(args.img_size)
-    snapshot_path = snapshot_path + '_s' + str(args.seed) if args.seed != 1234 else snapshot_path
 
-    net = SUnet(num_classes=args.num_classes).cuda(0)  # model initialization for TransCASCADE
-    net.load_from('./pretrain_pth/pvt_v2_b1.pth')
-    #net = PVT_CASCADE(n_class=config_vit.n_classes).cuda()
+    args.is_pretrain = True
+    args.exp = 'SUNet_' + str(args.img_size)
+    snapshot_path = "{}/{}/{}".format(args.save_path, args.exp, 'SUNet')
+    snapshot_path = snapshot_path + '_pretrain' if args.is_pretrain else snapshot_path
+    snapshot_path = snapshot_path + '_epo' +str(args.max_epochs) if args.max_epochs != 30 else snapshot_path
+    snapshot_path = snapshot_path+'_bs'+str(args.batch_size)
+    snapshot_path = snapshot_path + '_lr' + str(args.lr) if args.lr != 0.01 else snapshot_path
+    snapshot_path = snapshot_path + '_'+str(args.img_size)
+    snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
+
+    net = SUnet(num_classes=args.num_classes).cuda()
 
     snapshot = os.path.join(snapshot_path, 'best.pth')
     if not os.path.exists(snapshot): snapshot = snapshot.replace('best', 'epoch_'+str(args.max_epochs-1))
@@ -104,7 +107,7 @@ if __name__ == "__main__":
     logging.info(snapshot_name)
 
     args.test_save_dir = os.path.join(snapshot_path, args.test_save_dir)
-    test_save_path = os.path.join(args.test_save_dir, args.exp)
+    test_save_path = os.path.join(args.test_save_dir, args.exp, snapshot_name)
     os.makedirs(test_save_path, exist_ok=True)
     
     

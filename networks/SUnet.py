@@ -8,7 +8,7 @@ import torch.nn as nn
 from timm.models import register_model
 
 from timm.models.layers import to_2tuple, trunc_normal_
-from networks.decoder import SUnetDecoder, Block
+from .decoder import SUnetDecoder, Block
 import timm
 
 
@@ -145,7 +145,7 @@ class SUnet(nn.Module):
     def __init__(self, encoder_pretrained=True, patch_size=4, embed_dims=[64, 128, 320, 512],
                  num_heads=[1, 2, 5, 8], mlp_ratios=[8, 8, 4, 4], qkv_bias=True,
                  norm_layer=partial(nn.LayerNorm, eps=1e-6), depths=[2, 2, 2, 2],
-                 sr_ratios=[8, 4, 2, 1],drop_path_rate=0.2, up_depths=[0, 2, 2, 2],
+                 sr_ratios=[8, 4, 2, 1], drop_path_rate=0.2, up_depths=[0, 2, 2, 2],
                  embed_dims_up=[512, 320, 128, 64], num_classes=9):
         super().__init__()
 
@@ -185,31 +185,8 @@ class SUnet(nn.Module):
             print("pretrained_path:{}".format(pretrained_path))
             device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
             pretrained_dict = torch.load(pretrained_path, map_location=device)
-            # if "model"  not in pretrained_dict:
-            #     print("---start load pretrained modle by splitting---")
-            #     pretrained_dict = {k[17:]:v for k,v in pretrained_dict.items()}
-            #     for k in list(pretrained_dict.keys()):
-            #         if "output" in k:
-            #             print("delete key:{}".format(k))
-            #             del pretrained_dict[k]
-            #     msg = self.swin_unet.load_state_dict(pretrained_dict,strict=False)
-            #     # print(msg)
-            #     return
-            # pretrained_dict = pretrained_dict['model']
-            print("---start load pretrained modle of swin encoder---")
 
-            model_dict = self.encoder.state_dict()
-            # full_dict = copy.deepcopy(pretrained_dict)
-            # for k, v in pretrained_dict.items():
-            #     if "block" in k:
-            #         current_layer_num = 3-int(k[7:8])
-            #         current_k = "layers_up." + str(current_layer_num) + k[8:]
-            #         full_dict.update({current_k:v})
-            # for k in list(full_dict.keys()):
-            #     if k in model_dict:
-            #         if full_dict[k].shape != model_dict[k].shape:
-            #             print("delete:{};shape pretrain:{};shape model:{}".format(k,v.shape,model_dict[k].shape))
-            #             del full_dict[k]
+            print("---start load pretrained modle of swin encoder---")
 
             msg = self.encoder.load_state_dict(pretrained_dict, strict=False)
             print(msg)
